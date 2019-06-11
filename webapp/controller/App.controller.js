@@ -115,6 +115,18 @@ sap.ui.define([
             this._bTechnicalErrors = false; // If there were technical errors, a new save resets them.
         },
 
+        onDelete : function () {
+            var oSelected = this.byId("peopleList").getSelectedItem();
+
+            if (oSelected) {
+                oSelected.getBindingContext().delete("$auto").then(function () {
+                    MessageToast.show(this._getText("deletionSuccessMessage"));
+                }.bind(this), function (oError) {
+                    MessageBox.error(oError.message);
+                });
+            }
+        },
+
         onSearch : function () {
             var oView = this.getView(),
                 sValue = oView.byId("searchField").getValue(),
